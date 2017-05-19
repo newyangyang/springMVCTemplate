@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<!-- configuration file for LogBack (slf4J implementation) See here for more 
+	details: http://gordondickens.com/wordpress/2013/03/27/sawing-through-the-java-loggers/ -->
+<configuration scan="true" scanPeriod="130 seconds">
+
+    <property name="base_logs" value="/application/search/template/projectlog"/>  <!-- TODO CHANGE THIS! -->
+
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <!-- To enable JMX Management -->
+    <jmxConfigurator/>
+
+    <!--<logger name="org.hibernate" level="debug"/> -->
+    <!-- Uncomment and add your logger here: <logger name="org.springframework.samples.service.service"
+        level="debug"/> -->
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%c:%L] - %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="main"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${base_logs}/main.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>
+                ${base_logs}/main%i.log
+            </FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>20</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>10MB</MaxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <Pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%c:%L] - %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="info"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <OnMismatch>DENY</OnMismatch>
+            <OnMatch>NEUTRAL</OnMatch>
+        </filter>
+        <File>${base_logs}/info/info.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>
+                ${base_logs}/info/info%i.log
+            </FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>20</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>15MB</MaxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%c:%L] - %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="debug"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <OnMismatch>DENY</OnMismatch>
+            <OnMatch>NEUTRAL</OnMatch>
+        </filter>
+        <File>${base_logs}/debug/debug.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>
+                ${base_logs}/debug/debug%i.log
+            </FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>20</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>15MB</MaxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%c:%L] - %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="warn"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <OnMismatch>DENY</OnMismatch>
+            <OnMatch>NEUTRAL</OnMatch>
+        </filter>
+        <File>${base_logs}/warn/warn.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>
+                ${base_logs}/warn/warn%i.log
+            </FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>20</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>15MB</MaxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%c:%L] - %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="error"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <OnMismatch>DENY</OnMismatch>
+            <OnMatch>NEUTRAL</OnMatch>
+        </filter>
+        <File>${base_logs}/error/error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>
+                ${base_logs}/error/error%i.log
+            </FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>20</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>15MB</MaxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} [%c:%L] - %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <!-- root是一个logger -->
+    <root level="info">
+        <!-- <appender-ref ref="stdout" /> -->
+        <appender-ref ref="info"/>
+        <appender-ref ref="debug"/>
+        <appender-ref ref="error"/>
+        <appender-ref ref="warn"/>
+        <appender-ref ref="main"/>
+    </root>
+
+</configuration>
